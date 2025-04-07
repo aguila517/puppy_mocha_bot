@@ -1,5 +1,8 @@
 Puppy MochaBot is a lite version of MochaBot that'll only check Torrey Pines.
 
+Choco:
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+
 Python@3.9.6
 https://www.python.org/downloads/release/python-396/
 
