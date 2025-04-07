@@ -178,8 +178,6 @@ class Torrey(Course):
                             else:
                                 # If holding failed, ensure 5 minutes has been elapsed before proceeding
                                 time.sleep(5*30)
-                        else:
-                            break
                 soup.clear()
 
         if search_window == 'advanced' and tee_times_to_email:
