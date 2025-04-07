@@ -4,3 +4,5 @@ hold_tee_time = {
                     'days': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], # 'Mon','Tue','Wed','Thu','Fri','Sat','Sun'
                     'number_of_players': 4, # Minimum number of available players in the tee time
                 }
+
+Enable_auto_mouse_move = False
