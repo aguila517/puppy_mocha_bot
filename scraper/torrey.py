@@ -166,7 +166,8 @@ class Torrey(Course):
                         if tee_time_obj < super().advanced_threshold_time_obj and date_obj.weekday() >= 5 and int(num_player.text) == 4:
                             tee_times_to_email += text
                     else:
-                        if tee_time_obj < super().threshold_time_obj and date_obj.strftime("%a").lower() in config.hold_tee_time['days'] and int(num_player.text) >= config.hold_tee_time['number_of_players']:
+                        search_days = [string.lower() for string in config.hold_tee_time['days']]
+                        if tee_time_obj < super().threshold_time_obj and date_obj.strftime("%a").lower() in search_days and int(num_player.text) >= config.hold_tee_time['number_of_players']:
                             print('!!!ATTN!!!: Hold the tee time ' + date_str + ' - ' + course + ': '+ text)
                             if self.hold_tee_time(tee_time.text, date_str + ' - ' + course + ': '+ text):
                                 # Alarm!
