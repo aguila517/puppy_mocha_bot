@@ -174,7 +174,7 @@ class Torrey(Course):
                                 # Alarm!
                                 t_end = time.time() + 60 * 5
                                 while time.time() < t_end:
-                                    playsound(os.path.join("sound","alarm.wav"))
+                                    playsound('alarm.wav')
                             else:
                                 # If holding failed, ensure 5 minutes has been elapsed before proceeding
                                 time.sleep(5*30)
