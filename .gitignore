@@ -13,7 +13,6 @@ credential/credential*
 log/
 credential/web_passwords.yaml
 userdata/data.yaml
-userdata/config.py
 pyvenv.cfg
 
 # Byte-compiled / optimized / DLL files

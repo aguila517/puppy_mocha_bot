@@ -1,6 +1,5 @@
 import time
 import os
-import mac_imessage
 import smtplib
 
 from email.mime.text import MIMEText
@@ -126,11 +125,13 @@ class Course:
 
             if send_it:
                 print('DEBUG: Sending imsg [{}] - sent to [{}]'.format(text, contact.get('name')))
+                '''
                 mac_imessage.send(
                     message=text,
                     phone_number=contact.get('phone'),
                     medium='iMessage'
                     )
+                '''
 
     def click_by_xpath(self, driver, cfg_dict):
         time.sleep(1)

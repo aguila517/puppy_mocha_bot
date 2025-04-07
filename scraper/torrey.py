@@ -1,6 +1,6 @@
 import time
-import dingpy
 
+from playsound import playsound
 from userdata import config
 from userdata import config_updater
 from scraper.course import Course
@@ -172,7 +172,7 @@ class Torrey(Course):
                                 # Alarm!
                                 t_end = time.time() + 60 * 5
                                 while time.time() < t_end:
-                                    dingpy.ding()
+                                    playsound('./sound/alarm.wav')
                             else:
                                 # If holding failed, ensure 5 minutes has been elapsed before proceeding
                                 time.sleep(5*30)

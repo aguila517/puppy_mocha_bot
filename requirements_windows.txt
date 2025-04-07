@@ -1,7 +1,7 @@
 attrs==25.3.0
 beautifulsoup4==4.13.3
-boto3==1.14.63
-botocore==1.17.63
+boto3==1.37.28
+botocore==1.37.28
 certifi==2025.1.31
 charset-normalizer==3.4.1
 dingpy==1.0.6
@@ -14,14 +14,10 @@ mac-imessage==0.2.0
 MouseInfo==0.1.3
 outcome==1.3.0.post0
 pillow==11.1.0
-playsound==1.3.0
 PyAutoGUI==0.9.54
 pydub==0.24.1
 PyGetWindow==0.0.9
 PyMsgBox==1.0.9
-pyobjc-core==11.0
-pyobjc-framework-Cocoa==11.0
-pyobjc-framework-Quartz==11.0
 pyperclip==1.9.0
 PyRect==0.2.0
 PyScreeze==1.0.1
@@ -42,7 +38,7 @@ trio==0.29.0
 trio-websocket==0.12.2
 typing_extensions==4.13.1
 undetected-chromedriver==3.5.5
-urllib3==1.25.11
+urllib3==2.3.0
 websocket-client==1.8.0
 websockets==15.0.1
 wsproto==1.2.0
