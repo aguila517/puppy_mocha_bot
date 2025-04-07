@@ -175,9 +175,15 @@ class Torrey(Course):
                                 t_end = time.time() + 60 * 5
                                 while time.time() < t_end:
                                     playsound('alarm.wav')
-                            else:
-                                # If holding failed, ensure 5 minutes has been elapsed before proceeding
-                                time.sleep(5*30)
+                                    try:
+                                        if 'in' in self.driver.find_element(By.CLASS_NAME, 'modal').get_attribute('class'):
+                                            continue
+                                        else:
+                                            break
+                                    except:
+                                        break
+                                    
+                            
                 soup.clear()
 
         if search_window == 'advanced' and tee_times_to_email:
