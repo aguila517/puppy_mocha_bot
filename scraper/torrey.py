@@ -1,4 +1,5 @@
 import time
+import os
 
 from playsound import playsound
 from userdata import config
@@ -173,7 +174,7 @@ class Torrey(Course):
                                 # Alarm!
                                 t_end = time.time() + 60 * 5
                                 while time.time() < t_end:
-                                    playsound('./sound/alarm.wav')
+                                    playsound(os.path.join("sound", "alarm.wav"))
                             else:
                                 # If holding failed, ensure 5 minutes has been elapsed before proceeding
                                 time.sleep(5*30)
