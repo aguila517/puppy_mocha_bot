@@ -1,5 +1,6 @@
 Puppy MochaBot is a lite version of MochaBot that'll only check Torrey Pines.
 
+Pre-requisite:
 Choco:
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
@@ -11,3 +12,9 @@ choco install ffmpeg
 
 Mac:
 brew install ffmpeg
+
+Installation:
+python3 -m venv .venv
+source ./venv/bin/activate
+pip3 -r install requirements.txt
+python3 bot_health_check.py
