@@ -10,6 +10,8 @@ https://www.python.org/downloads/release/python-396/
 Windows:
 choco install ffmpeg
 
+vs_BuildTools.exe --norestart --passive --includeRecommended --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.MSBuildTools
+
 Mac:
 brew install ffmpeg
 
