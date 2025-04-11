@@ -1,12 +1,11 @@
 import time
-import os
 
+from scraper import mail
 from playsound import playsound
 from userdata import config
 from userdata import config_updater
 from scraper.course import Course
 from bs4 import BeautifulSoup
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -75,7 +74,7 @@ class Torrey(Course):
     def hold_tee_time(self, tee_time, not_so_encrypted_msg):
         success_or_not = False
         try:
-            buttons = self.driver.find_elements(By.CLASS_NAME, Torrey.obj_list['tee_time_list']['obj'])
+            buttons = self.driver.find_elements(By.CLASS_NAME, self.obj_list['tee_time_list']['obj'])
             for button in buttons:
                 if button.text == tee_time:
                     button.click()
@@ -83,13 +82,6 @@ class Torrey(Course):
                     break
                 
             WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, '//*[@id="book_time"]/div/div[3]/button[1]')))
-            '''
-            send_imsg('Found tee time: ' + not_so_encrypted_msg + 'To book, send an email to moches.yun@gmail.com with below text as subject:')
-            send_imsg('Book ' + not_so_encrypted_msg)
-            if mail.check_input('Book ' + not_so_encrypted_msg):
-                if book_tee_time(driver):
-                    success_or_not = True
-            '''
         except:
             print('DEBUG: Timer expired')
         
@@ -106,7 +98,7 @@ class Torrey(Course):
             while day < 7:
                 day += 1
                 # find which day we're currently looking at
-                today = self.driver.find_element(By.XPATH, Torrey.obj_list['date']['obj'].format(week, day))
+                today = self.driver.find_element(By.XPATH, self.obj_list['date']['obj'].format(week, day))
                 if first_enabled_date_found == False and 'disabled' in today.get_attribute('class'):
                     continue
                 elif first_enabled_date_found == True and 'disabled' in today.get_attribute('class'):
@@ -114,9 +106,9 @@ class Torrey(Course):
 
                 first_enabled_date_found = True
 
-                self.driver.find_element(By.XPATH, Torrey.obj_list['date']['obj'].format(week, day)).click()
+                self.driver.find_element(By.XPATH, self.obj_list['date']['obj'].format(week, day)).click()
                 time.sleep(0.5)
-                WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, Torrey.obj_list['date']['wait_on'])))            
+                WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, self.obj_list['date']['wait_on'])))            
 
                 # find which day we're currently looking at
                 date = self.driver.find_element(By.ID, 'date-field')
@@ -130,7 +122,7 @@ class Torrey(Course):
                     day = 1
                     # Check if above assumption was incorrect
                     for i2 in range (1,8):
-                        new_today = self.driver.find_element(By.XPATH, Torrey.obj_list['date']['obj'].format(1, i2))
+                        new_today = self.driver.find_element(By.XPATH, self.obj_list['date']['obj'].format(1, i2))
                         if 'active' in new_today.get_attribute('class'):
                             week = 1
                             day = i2
@@ -139,7 +131,7 @@ class Torrey(Course):
 
                 # Allow tee time list to load
                 try:
-                    WebDriverWait(self.driver, Torrey.obj_list['tee_time_list']['time_out']).until(EC.presence_of_element_located((By.CLASS_NAME, Torrey.obj_list['tee_time_list']['wait_on'])))  
+                    WebDriverWait(self.driver, self.obj_list['tee_time_list']['time_out']).until(EC.presence_of_element_located((By.CLASS_NAME, self.obj_list['tee_time_list']['wait_on'])))  
                 except:
                     print('DEBUG: {} - {} No Tee Time'.format(course, date_str))
 
@@ -171,10 +163,13 @@ class Torrey(Course):
                         if tee_time_obj < super().threshold_time_obj and date_obj.strftime("%a").lower() in search_days and int(num_player.text) >= config.hold_tee_time['number_of_players']:
                             print('!!!ATTN!!!: Hold the tee time ' + date_str + ' - ' + course + ': '+ text)
                             if self.hold_tee_time(tee_time.text, date_str + ' - ' + course + ': '+ text):
+                                # Send Mail!
+                                mail.send_message('Holding: {} - {} {}'.format(course, date_str, tee_time.text), 'Please complete the booking process on your server wihtin 5 minutes')
                                 # Alarm!
                                 t_end = time.time() + 60 * 5
                                 while time.time() < t_end:
-                                    playsound('alarm.wav')
+                                    if config.enable_alarm:
+                                        playsound('alarm.wav')
                                     try:
                                         if 'in' in self.driver.find_element(By.CLASS_NAME, 'modal').get_attribute('class'):
                                             continue
@@ -194,19 +189,19 @@ class Torrey(Course):
         WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, self.obj_list['login_page']['wait_on'])))
         #go to the tee time site
         try:
-            super().click_by_xpath(self.driver, Torrey.obj_list['tee_time_sheet'])
+            super().click_by_xpath(self.driver, self.obj_list['tee_time_sheet'])
         except:
-            self.driver.get(Torrey.obj_list['tee_time_sheet']['url'])
+            self.driver.get(self.obj_list['tee_time_sheet']['url'])
         
         #click on residence 0-7 days tee time sheet
         if search_window == 'advanced':
-            super().click_by_xpath(self.driver, Torrey.obj_list['8_90_days_slot'])
+            super().click_by_xpath(self.driver, self.obj_list['8_90_days_slot'])
         else:
-            super().click_by_xpath(self.driver, Torrey.obj_list['0_7_days_slot'])
+            super().click_by_xpath(self.driver, self.obj_list['0_7_days_slot'])
 
         print('DEBUG: Searching on date: {}'.format(datetime.now()))
         # Get torrey South
-        super().click_by_xpath(self.driver, Torrey.obj_list['South'])
+        super().click_by_xpath(self.driver, self.obj_list['South'])
         self.alert_tee_time('torrey south', search_window)
 
         self.driver.refresh()
@@ -214,20 +209,20 @@ class Torrey(Course):
         WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.XPATH, self.obj_list['login_page']['wait_on'])))
         #go to the tee time site
         try:
-            super().click_by_xpath(self.driver, Torrey.obj_list['tee_time_sheet'])
+            super().click_by_xpath(self.driver, self.obj_list['tee_time_sheet'])
         except:
-            self.driver.get(Torrey.obj_list['tee_time_sheet']['url'])
+            self.driver.get(self.obj_list['tee_time_sheet']['url'])
         
         #click on residence 0-7 days tee time sheet
         if search_window == 'advanced':
-            super().click_by_xpath(self.driver, Torrey.obj_list['8_90_days_slot'])
+            super().click_by_xpath(self.driver, self.obj_list['8_90_days_slot'])
         else:
-            super().click_by_xpath(self.driver, Torrey.obj_list['0_7_days_slot'])
+            super().click_by_xpath(self.driver, self.obj_list['0_7_days_slot'])
 
         print('DEBUG: Searching on date: {}'.format(datetime.now()))
 
         # Get torrey North
-        super().click_by_xpath(self.driver, Torrey.obj_list['North'])
+        super().click_by_xpath(self.driver, self.obj_list['North'])
         self.alert_tee_time('torrey north', search_window)
         self.driver.refresh()
 

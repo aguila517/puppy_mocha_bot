@@ -1,13 +1,9 @@
 import undetected_chromedriver as uc
-import threading
 import time
 
 from scraper import mouse
-from scraper import course
 from scraper.torrey import Torrey
 from selenium.webdriver.chrome.options import Options
-from datetime import datetime
-from selenium import webdriver
 from userdata import config
 
 if __name__ == '__main__':
@@ -33,6 +29,6 @@ if __name__ == '__main__':
 
         # Sleep for 30 seconds before the next query
         time.sleep(10)
-        if config.Enable_auto_mouse_move:
+        if config.enable_auto_mouse_move:
             mouse.wiggle()
 
