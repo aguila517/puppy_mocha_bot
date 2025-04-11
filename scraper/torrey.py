@@ -164,7 +164,11 @@ class Torrey(Course):
                             print('!!!ATTN!!!: Hold the tee time ' + date_str + ' - ' + course + ': '+ text)
                             if self.hold_tee_time(tee_time.text, date_str + ' - ' + course + ': '+ text):
                                 # Send Mail!
-                                mail.send_message('Holding: {} - {} {}'.format(course, date_str, tee_time.text), 'Please complete the booking process on your server wihtin 5 minutes')
+                                now = datetime.now()
+                                current_time = now.time()
+                                time_string = current_time.strftime("%H:%M:%S")
+                                mail.send_message('Holding: {} - {} {}'.format(course, date_str, tee_time.text), 
+                                                  'Please complete the booking process on your server wihtin 5 minutes.\nCurrent time is {}.'.format(time_string))
                                 # Alarm!
                                 t_end = time.time() + 60 * 5
                                 while time.time() < t_end:

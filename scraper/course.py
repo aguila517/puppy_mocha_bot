@@ -1,15 +1,11 @@
 import time
 import os
-import smtplib
 
-from email.mime.text import MIMEText
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
 from userdata import config
-from userdata import config_updater
 
 class Course:
     threshold_time_obj = datetime.strptime(config.hold_tee_time['latest_tee_time'], '%H:%M').time()

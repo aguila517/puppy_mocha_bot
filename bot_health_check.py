@@ -2,7 +2,6 @@ import psutil
 import os
 import time
 import subprocess
-from subprocess import run
 
 
 def is_script_running(script_name):
