@@ -169,11 +169,14 @@ class Torrey(Course):
                                 time_string = current_time.strftime("%H:%M:%S")
                                 mail.send_message('Holding: {} - {} {}'.format(course, date_str, tee_time.text), 
                                                   'Please complete the booking process on your server wihtin 5 minutes.\nCurrent time is {}.'.format(time_string))
-                                # Alarm!
                                 t_end = time.time() + 60 * 5
                                 while time.time() < t_end:
                                     if config.enable_alarm:
-                                        playsound('alarm.wav')
+                                        # Alarm! (playsound has a bug, so try to play it.  Otherwise ignore)
+                                        try:
+                                            playsound('alarm.wav')
+                                        except:
+                                            pass
                                     try:
                                         if 'in' in self.driver.find_element(By.CLASS_NAME, 'modal').get_attribute('class'):
                                             continue
