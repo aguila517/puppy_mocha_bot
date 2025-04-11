@@ -1,6 +1,4 @@
 import os
-import re
-import time
 import yaml
 
 def get_id_and_password(key):
